@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday Jojo 🌿</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --sage-darkest: #3a5240;
+      --sage-dark:    #547a5c;
+      --sage:         #7a9e82;
+      --sage-light:   #a8c5a0;
+      --sage-pale:    #cfdfc8;
+      --sage-mist:    #e8f0e4;
+      --sage-whisper: #f3f7f0;
+      --cream:        #faf8f3;
+      --text-dark:    #2b3a2e;
+      --text-mid:     #4a6350;
+      --gold:         #c9a96e;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      font-family: 'Lato', sans-serif;
+      color: var(--text-dark);
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* ── Background canvas ── */
+    #bg-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ── Floating petals ── */
+    .petals-container {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .petal {
+      position: absolute;
+      top: -60px;
+      opacity: 0;
+      animation: fall linear infinite;
+    }
+
+    .petal svg { display: block; }
+
+    @keyframes fall {
+      0%   { transform: translateY(0) rotate(0deg) scale(1);   opacity: 0; }
+      5%   { opacity: 0.7; }
+      90%  { opacity: 0.5; }
+      100% { transform: translateY(110vh) rotate(720deg) scale(0.6); opacity: 0; }
+    }
+
+    /* ── Main layout ── */
+    .page {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 60px 20px 100px;
+      gap: 0;
+    }
+
+    /* ── Header ── */
+    .header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .header .eyebrow {
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      font-size: 0.75rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 16px;
+    }
+
+    .header h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(3rem, 10vw, 5.5rem);
+      line-height: 1.1;
+      color: var(--sage-darkest);
+      letter-spacing: 0.02em;
+    }
+
+    .header h1 span {
+      font-style: italic;
+      color: var(--sage-dark);
+    }
+
+    .header .subtitle {
+      margin-top: 12px;
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      color: var(--sage-light);
+      text-transform: uppercase;
+    }
+
+    /* ── Divider ── */
+    .lotus-divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 32px 0;
+      width: min(500px, 90vw);
+    }
+
+    .lotus-divider .line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--sage-light), transparent);
+    }
+
+    /* ── Yoga figure ── */
+    .figure-section {
+      margin: 0 0 48px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .figure-ring {
+      position: relative;
+      width: 220px;
+      height: 220px;
+    }
+
+    .figure-ring::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--sage-pale) 0%, transparent 70%);
+      animation: pulse-ring 4s ease-in-out infinite;
+    }
+
+    @keyframes pulse-ring {
+      0%, 100% { transform: scale(1);   opacity: 0.8; }
+      50%       { transform: scale(1.08); opacity: 1;   }
+    }
+
+    .figure-ring svg {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 8px 24px rgba(106,143,114,0.25));
+    }
+
+    /* ── Poem card ── */
+    .poem-card {
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(168, 197, 160, 0.4);
+      border-radius: 24px;
+      padding: clamp(32px, 6vw, 60px) clamp(28px, 7vw, 72px);
+      max-width: 620px;
+      width: 100%;
+      box-shadow:
+        0 4px 6px rgba(58, 82, 64, 0.06),
+        0 20px 60px rgba(58, 82, 64, 0.10),
+        inset 0 1px 0 rgba(255,255,255,0.8);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .poem-card::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 180px; height: 180px;
+      background: radial-gradient(circle, rgba(168,197,160,0.25) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .poem-card::after {
+      content: '';
+      position: absolute;
+      bottom: -40px; left: -40px;
+      width: 160px; height: 160px;
+      background: radial-gradient(circle, rgba(201,169,110,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .poem {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.1rem, 3vw, 1.35rem);
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--text-dark);
+      position: relative;
+      z-index: 1;
+    }
+
+    .poem .stanza {
+      margin-bottom: 1.6em;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.8s ease forwards;
+    }
+
+    .poem .stanza:nth-child(1) { animation-delay: 0.3s; }
+    .poem .stanza:nth-child(2) { animation-delay: 0.6s; }
+    .poem .stanza:nth-child(3) { animation-delay: 0.9s; }
+
+    .poem .stanza:last-child { margin-bottom: 0; }
+
+    .poem .line { display: block; }
+
+    .poem .line.accent {
+      font-style: italic;
+      color: var(--sage-dark);
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Gold accent line ── */
+    .gold-accent {
+      width: 48px;
+      height: 2px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+      margin: 24px auto;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      margin-top: 64px;
+      text-align: center;
+    }
+
+    .footer .mantra {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1rem;
+      color: var(--sage);
+      letter-spacing: 0.08em;
+    }
+
+    .footer .hearts {
+      margin-top: 8px;
+      font-size: 0.8rem;
+      color: var(--sage-light);
+      letter-spacing: 0.3em;
+    }
+
+    /* ── Corner leaves ── */
+    .corner-leaf {
+      position: fixed;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.18;
+    }
+    .corner-leaf.tl { top: -20px; left: -20px; transform: rotate(30deg); }
+    .corner-leaf.tr { top: -20px; right: -20px; transform: rotate(-60deg) scaleX(-1); }
+    .corner-leaf.bl { bottom: -20px; left: -20px; transform: rotate(-30deg); }
+    .corner-leaf.br { bottom: -20px; right: -20px; transform: rotate(60deg) scaleX(-1); }
+
+    /* ── Responsive ── */
+    @media (max-width: 480px) {
+      .figure-ring { width: 170px; height: 170px; }
+      .poem-card { border-radius: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Animated background -->
+<canvas id="bg-canvas"></canvas>
+
+<!-- Floating petals -->
+<div class="petals-container" id="petals"></div>
+
+<!-- Corner decorative leaves -->
+<div class="corner-leaf tl">
+  <svg width="180" height="180" viewBox="0 0 180 180" fill="none">
+    <path d="M20,160 Q60,20 160,20 Q120,100 20,160Z" fill="#547a5c"/>
+    <path d="M20,160 Q90,70 160,20" stroke="#3a5240" stroke-width="1.5" fill="none"/>
+  </svg>
+</div>
+<div class="corner-leaf tr">
+  <svg width="180" height="180" viewBox="0 0 180 180" fill="none">
+    <path d="M20,160 Q60,20 160,20 Q120,100 20,160Z" fill="#547a5c"/>
+    <path d="M20,160 Q90,70 160,20" stroke="#3a5240" stroke-width="1.5" fill="none"/>
+  </svg>
+</div>
+<div class="corner-leaf bl">
+  <svg width="180" height="180" viewBox="0 0 180 180" fill="none">
+    <path d="M20,160 Q60,20 160,20 Q120,100 20,160Z" fill="#547a5c"/>
+    <path d="M20,160 Q90,70 160,20" stroke="#3a5240" stroke-width="1.5" fill="none"/>
+  </svg>
+</div>
+<div class="corner-leaf br">
+  <svg width="180" height="180" viewBox="0 0 180 180" fill="none">
+    <path d="M20,160 Q60,20 160,20 Q120,100 20,160Z" fill="#547a5c"/>
+    <path d="M20,160 Q90,70 160,20" stroke="#3a5240" stroke-width="1.5" fill="none"/>
+  </svg>
+</div>
+
+<div class="page">
+
+  <!-- Header -->
+  <header class="header">
+    <p class="eyebrow">a birthday wish for</p>
+    <h1>Happy Birthday<br /><span>Jojo</span></h1>
+    <p class="subtitle">peace &nbsp;·&nbsp; light &nbsp;·&nbsp; love</p>
+  </header>
+
+  <!-- Lotus divider -->
+  <div class="lotus-divider">
+    <div class="line"></div>
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+      <!-- Lotus flower -->
+      <ellipse cx="18" cy="22" rx="4" ry="2" fill="#a8c5a0"/>
+      <path d="M18 20 Q14 14 10 18 Q14 22 18 20Z" fill="#7a9e82"/>
+      <path d="M18 20 Q22 14 26 18 Q22 22 18 20Z" fill="#7a9e82"/>
+      <path d="M18 20 Q12 10 18 8 Q24 10 18 20Z" fill="#547a5c"/>
+      <path d="M18 20 Q8  16 8  10 Q14 12 18 20Z" fill="#a8c5a0" opacity=".8"/>
+      <path d="M18 20 Q28 16 28 10 Q22 12 18 20Z" fill="#a8c5a0" opacity=".8"/>
+      <path d="M18 22 Q14 26 14 30 Q18 28 18 22Z" fill="#cfdfc8"/>
+      <path d="M18 22 Q22 26 22 30 Q18 28 18 22Z" fill="#cfdfc8"/>
+    </svg>
+    <div class="line"></div>
+  </div>
+
+  <!-- Meditating figure -->
+  <div class="figure-section">
+    <div class="figure-ring">
+      <svg viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Outer glow ring -->
+        <circle cx="110" cy="110" r="100" stroke="#a8c5a0" stroke-width="0.8" stroke-dasharray="4 6" opacity="0.5"/>
+        <circle cx="110" cy="110" r="88"  stroke="#cfdfc8" stroke-width="0.5" opacity="0.6"/>
+
+        <!-- Ground / meditation cushion -->
+        <ellipse cx="110" cy="165" rx="52" ry="10" fill="#cfdfc8" opacity="0.7"/>
+        <ellipse cx="110" cy="163" rx="40" ry="7"  fill="#a8c5a0" opacity="0.5"/>
+
+        <!-- Legs / crossed lotus position -->
+        <path d="M70 155 Q90 145 110 150 Q130 145 150 155 Q130 168 110 165 Q90 168 70 155Z"
+              fill="#7a9e82" opacity="0.85"/>
+
+        <!-- Body torso -->
+        <rect x="97" y="105" width="26" height="48" rx="13" fill="#547a5c"/>
+
+        <!-- Arms resting on knees -->
+        <path d="M97 130 Q78 140 70 155" stroke="#547a5c" stroke-width="10" stroke-linecap="round" fill="none"/>
+        <path d="M123 130 Q142 140 150 155" stroke="#547a5c" stroke-width="10" stroke-linecap="round" fill="none"/>
+
+        <!-- Hands (mudra circles) -->
+        <circle cx="70" cy="155" r="6" fill="#7a9e82"/>
+        <circle cx="150" cy="155" r="6" fill="#7a9e82"/>
+
+        <!-- Neck -->
+        <rect x="105" y="97" width="10" height="12" rx="5" fill="#547a5c"/>
+
+        <!-- Head -->
+        <ellipse cx="110" cy="88" rx="20" ry="22" fill="#547a5c"/>
+
+        <!-- Hair bun -->
+        <ellipse cx="110" cy="68" rx="9" ry="8" fill="#3a5240"/>
+        <circle cx="110" cy="61" r="5" fill="#3a5240"/>
+
+        <!-- Face: serene closed eyes -->
+        <path d="M103 88 Q106 90 109 88" stroke="#cfdfc8" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+        <path d="M111 88 Q114 90 117 88" stroke="#cfdfc8" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+        <!-- Gentle smile -->
+        <path d="M106 96 Q110 99 114 96" stroke="#cfdfc8" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+
+        <!-- Third eye dot -->
+        <circle cx="110" cy="83" r="2" fill="#c9a96e" opacity="0.9"/>
+
+        <!-- Floating sparkles / energy -->
+        <circle cx="60"  cy="80"  r="2.5" fill="#c9a96e" opacity="0.6">
+          <animate attributeName="opacity" values="0.6;1;0.6" dur="2.8s" repeatCount="indefinite"/>
+          <animate attributeName="r"       values="2.5;3.5;2.5" dur="2.8s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="160" cy="75"  r="2"   fill="#c9a96e" opacity="0.5">
+          <animate attributeName="opacity" values="0.5;1;0.5" dur="3.4s" repeatCount="indefinite"/>
+          <animate attributeName="r"       values="2;3;2"     dur="3.4s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="78"  cy="55"  r="1.5" fill="#a8c5a0" opacity="0.7">
+          <animate attributeName="opacity" values="0.7;1;0.7" dur="2.2s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="145" cy="58"  r="1.5" fill="#a8c5a0" opacity="0.6">
+          <animate attributeName="opacity" values="0.6;1;0.6" dur="3s"   repeatCount="indefinite"/>
+        </circle>
+        <circle cx="110" cy="40"  r="3"   fill="#cfdfc8" opacity="0.4">
+          <animate attributeName="opacity" values="0.4;0.9;0.4" dur="4s" repeatCount="indefinite"/>
+          <animate attributeName="r"       values="3;4.5;3"     dur="4s" repeatCount="indefinite"/>
+        </circle>
+
+        <!-- Rising energy lines -->
+        <line x1="110" y1="105" x2="110" y2="50" stroke="#cfdfc8" stroke-width="0.8" stroke-dasharray="3 5" opacity="0.35"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Gold accent -->
+  <div class="gold-accent"></div>
+
+  <!-- Poem card -->
+  <div class="poem-card">
+    <div class="poem">
+      <div class="stanza">
+        <span class="line">Yo yo,</span>
+        <span class="line accent">Jojo doing yoga, don't stress no quotas,</span>
+        <span class="line">Queen in her zen, invincible aura.</span>
+      </div>
+
+      <div class="stanza">
+        <span class="line accent">Calm and collected, spiritually connected,</span>
+        <span class="line">Nothing can shake her, her peace is protected.</span>
+      </div>
+
+      <div class="stanza">
+        <span class="line">She knows her worth, no need to shout,</span>
+        <span class="line accent">Birthday or not, she makes every day count.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lotus divider -->
+  <div class="lotus-divider" style="margin-top:40px">
+    <div class="line"></div>
+    <svg width="28" height="28" viewBox="0 0 36 36" fill="none">
+      <ellipse cx="18" cy="22" rx="4" ry="2" fill="#a8c5a0"/>
+      <path d="M18 20 Q14 14 10 18 Q14 22 18 20Z" fill="#7a9e82"/>
+      <path d="M18 20 Q22 14 26 18 Q22 22 18 20Z" fill="#7a9e82"/>
+      <path d="M18 20 Q12 10 18 8 Q24 10 18 20Z" fill="#547a5c"/>
+      <path d="M18 20 Q8  16 8  10 Q14 12 18 20Z" fill="#a8c5a0" opacity=".8"/>
+      <path d="M18 20 Q28 16 28 10 Q22 12 18 20Z" fill="#a8c5a0" opacity=".8"/>
+    </svg>
+    <div class="line"></div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p class="mantra">"Peace is not found — it is remembered."</p>
+    <p class="hearts">✦ &nbsp; with love &nbsp; ✦</p>
+  </footer>
+
+</div>
+
+<script>
+  /* ── Animated background: soft rippling gradient ── */
+  (function () {
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let W, H, t = 0;
+
+    function resize() {
+      W = canvas.width  = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    function draw() {
+      t += 0.004;
+      const cx = W * (0.5 + 0.08 * Math.sin(t));
+      const cy = H * (0.4 + 0.06 * Math.cos(t * 0.7));
+      const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(W, H) * 0.9);
+      grad.addColorStop(0,   '#e8f0e4');
+      grad.addColorStop(0.4, '#dce9d5');
+      grad.addColorStop(0.8, '#cfdfc8');
+      grad.addColorStop(1,   '#c2d4b8');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, W, H);
+      requestAnimationFrame(draw);
+    }
+    draw();
+  })();
+
+  /* ── Floating petals ── */
+  (function () {
+    const container = document.getElementById('petals');
+    const colors = ['#7a9e82','#a8c5a0','#547a5c','#cfdfc8','#c9a96e'];
+
+    function petalSVG(color, size) {
+      return `<svg width="${size}" height="${size}" viewBox="0 0 20 20" fill="none">
+        <ellipse cx="10" cy="10" rx="4" ry="9" fill="${color}" opacity="0.75" transform="rotate(${Math.random()*360} 10 10)"/>
+      </svg>`;
+    }
+
+    function spawnPetal() {
+      const el = document.createElement('div');
+      el.className = 'petal';
+      const size   = 10 + Math.random() * 14;
+      const left   = Math.random() * 100;
+      const dur    = 8 + Math.random() * 12;
+      const delay  = Math.random() * 10;
+      const color  = colors[Math.floor(Math.random() * colors.length)];
+      el.style.left            = left + 'vw';
+      el.style.animationDuration  = dur   + 's';
+      el.style.animationDelay     = delay + 's';
+      el.innerHTML = petalSVG(color, size);
+      container.appendChild(el);
+      setTimeout(() => el.remove(), (dur + delay) * 1000);
+    }
+
+    // Initial burst
+    for (let i = 0; i < 18; i++) spawnPetal();
+    // Continuous spawn
+    setInterval(spawnPetal, 700);
+  })();
+</script>
+</body>
+</html>
